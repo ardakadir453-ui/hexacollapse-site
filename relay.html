@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>relay</title>
+<body>relay
+<script>
+// Sends the store screenshots to the App Store Connect tab that opened this page.
+(async () => {
+  const names = ['01_action_combo.png','02_boss_frost_wyrm.png','03_journey_map.png','04_upgrades.png','05_daily_quests.png'];
+  const files = [];
+  for (const n of names) {
+    const r = await fetch('store/' + n);
+    files.push({ name: n, blob: await r.blob() });
+  }
+  window.opener && window.opener.postMessage({ hexaRelay: files }, 'https://appstoreconnect.apple.com');
+  document.body.textContent = 'sent ' + files.length;
+})();
+</script>
