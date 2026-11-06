@@ -9,7 +9,8 @@
     const r = await fetch('store/' + n);
     files.push({ name: n, blob: await r.blob() });
   }
-  window.opener && window.opener.postMessage({ hexaRelay: files }, 'https://appstoreconnect.apple.com');
+  const target = window.opener || (window.parent !== window ? window.parent : null);
+  target && target.postMessage({ hexaRelay: files }, 'https://appstoreconnect.apple.com');
   document.body.textContent = 'sent ' + files.length;
 })();
 </script>
